@@ -14,6 +14,7 @@
 #endif
 /** \endcond */
 
+/* statistical moments */
 libaf_value libaf_mean (const libaf_value *signal, int size);
 libaf_value libaf_variance (const libaf_value *signal, int size, libaf_value mean);
 libaf_value libaf_skewness (const libaf_value *signal, int size, libaf_value mean, libaf_value variance);
@@ -21,6 +22,7 @@ libaf_value libaf_kurtosis (const libaf_value *signal, int size, libaf_value mea
 void libaf_moments (const libaf_value *signal, int size, libaf_value *mean, libaf_value *variance,
                     libaf_value *skewness, libaf_value *kurtosis);
 
+/* spectral moments */
 libaf_value libaf_spectral_mean (const libaf_value *amplitudes, const libaf_value *frequencies, int size);
 libaf_value libaf_spectral_variance (const libaf_value *amplitudes, const libaf_value *frequencies,
                                      int size, libaf_value spectralMean);
@@ -31,5 +33,9 @@ libaf_value libaf_spectral_kurtosis (const libaf_value *amplitudes, const libaf_
 void libaf_spectral_moments (const libaf_value *amplitudes, const libaf_value *frequencies, int size,
                              libaf_value *mean, libaf_value *variance,
                              libaf_value *skewness, libaf_value *kurtosis);
+
+/* temporal things */
+libaf_value labaf_zero_crossing_rate (const libaf_value *signal, int size);
+libaf_value labaf_significant_zero_crossing_rate (const libaf_value *signal, int size, libaf_value threshold);
 
 #endif /* LIBAF_H_INCLUDED */
