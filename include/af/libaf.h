@@ -14,6 +14,10 @@
 #endif
 /** \endcond */
 
+/* utils */
+libaf_value libaf_sum (const libaf_value *signal, int size);
+libaf_value libaf_sum_of_squares (const libaf_value *signal, int size);
+
 /* statistical moments */
 libaf_value libaf_mean (const libaf_value *signal, int size);
 libaf_value libaf_variance (const libaf_value *signal, int size, libaf_value mean);
@@ -35,7 +39,12 @@ void libaf_spectral_moments (const libaf_value *amplitudes, const libaf_value *f
                              libaf_value *skewness, libaf_value *kurtosis);
 
 /* temporal things */
-libaf_value labaf_zero_crossing_rate (const libaf_value *signal, int size);
-libaf_value labaf_significant_zero_crossing_rate (const libaf_value *signal, int size, libaf_value threshold);
+libaf_value libaf_zero_crossing_rate (const libaf_value *signal, int size);
+libaf_value libaf_significant_zero_crossing_rate (const libaf_value *signal, int size, libaf_value threshold);
+
+/* irregularity */
+libaf_value libaf_krimphoff_irregulairty (const libaf_value *amplitudes, int size);
+libaf_value libaf_jensen_irregularity (const libaf_value *amplitudes, int size);
+libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int size, libaf_value rms);
 
 #endif /* LIBAF_H_INCLUDED */

@@ -2,7 +2,7 @@
 #include <math.h>
 #include <af/libaf.h>
 
-libaf_value labaf_zero_crossing_rate (const libaf_value *signal, int size)
+libaf_value libaf_zero_crossing_rate (const libaf_value *signal, int size)
 {
     int count = 0;
     int i = 0;
@@ -16,7 +16,7 @@ libaf_value labaf_zero_crossing_rate (const libaf_value *signal, int size)
     return (libaf_value) (count) / (size - 1);
 }
 
-libaf_value labaf_significant_zero_crossing_rate (const libaf_value *signal, int size, libaf_value threshold)
+libaf_value libaf_significant_zero_crossing_rate (const libaf_value *signal, int size, libaf_value threshold)
 {
     int count = 0;
     int i = 0;
