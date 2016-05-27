@@ -1,7 +1,7 @@
 #include <math.h>
 #include <af/libaf.h>
 
-libaf_value libaf_krimphoff_irregulairty (const libaf_value *amplitudes, int size)
+libaf_value libaf_krimphoff_irregularity (const libaf_value *amplitudes, int size)
 {
     libaf_value sum = 0;
     int i = 0;

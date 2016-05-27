@@ -1,3 +1,4 @@
+#include <math.h>
 #include <af/libaf.h>
 
 libaf_value libaf_sum (const libaf_value *signal, int size)
@@ -24,4 +25,9 @@ libaf_value libaf_sum_of_squares (const libaf_value *signal, int size)
     }
 
     return sum;
+}
+
+libaf_value libaf_rms (libaf_value sumOfSquares, int length)
+{
+    return sqrt (sumOfSquares / length);
 }
