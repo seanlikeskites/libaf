@@ -27,6 +27,19 @@ libaf_value libaf_sum_of_squares (const libaf_value *signal, int size)
     return sum;
 }
 
+libaf_value libaf_product (const libaf_value *signal, int size)
+{
+    libaf_value prod = 1;
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        prod *= signal [i];
+    }
+
+    return prod;
+}
+
 libaf_value libaf_rms (libaf_value sumOfSquares, int length)
 {
     return sqrt (sumOfSquares / length);

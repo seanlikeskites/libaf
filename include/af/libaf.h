@@ -17,6 +17,7 @@
 /* utils */
 libaf_value libaf_sum (const libaf_value *signal, int size);
 libaf_value libaf_sum_of_squares (const libaf_value *signal, int size);
+libaf_value libaf_product (const libaf_value *signal, int size);
 libaf_value libaf_rms (libaf_value sumOfSquares, int length);
 
 /* statistical moments */
@@ -47,5 +48,6 @@ libaf_value libaf_significant_zero_crossing_rate (const libaf_value *signal, int
 libaf_value libaf_krimphoff_irregularity (const libaf_value *amplitudes, int size);
 libaf_value libaf_jensen_irregularity (const libaf_value *amplitudes, int size, libaf_value sumOfSquares);
 libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int size, libaf_value rms);
+libaf_value libaf_spectral_flatness (libaf_value sum, libaf_value prod, int size);
 
 #endif /* LIBAF_H_INCLUDED */

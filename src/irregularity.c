@@ -46,3 +46,9 @@ libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int siz
 
     return num / den;
 }
+
+libaf_value libaf_spectral_flatness (libaf_value sum, libaf_value prod, int size)
+{
+    libaf_value num = size * pow (prod, 1.0 / (libaf_value) size);
+    return num / sum;
+}
