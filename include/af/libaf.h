@@ -14,6 +14,15 @@
 #endif
 /** \endcond */
 
+/* frequency conversion */
+/* hertz to mel as per O'Shaughnessy (1987) */
+void libaf_hertz_to_mel (const libaf_value *in, libaf_value *out, int size);
+void libaf_mel_to_hertz (const libaf_value *in, libaf_value *out, int size);
+
+/* hertz to bark as per Traunmuller (1990) */
+void libaf_hertz_to_bark (const libaf_value *in, libaf_value *out, int size);
+void libaf_bark_to_hertz (const libaf_value *in, libaf_value *out, int size);
+
 /* utils */
 libaf_value libaf_sum (const libaf_value *signal, int size);
 libaf_value libaf_sum_of_squares (const libaf_value *signal, int size);

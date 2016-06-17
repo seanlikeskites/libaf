@@ -85,7 +85,7 @@ void libaf_moments (const libaf_value *signal, int size, libaf_value *mean, liba
     }
 
     v = vSum / size;
-    s = sSum / (size * pow (v, 1.5f));
+    s = sSum / (size * pow (v, 1.5));
     k = kSum / (size * v * v);
 
     *mean = m;

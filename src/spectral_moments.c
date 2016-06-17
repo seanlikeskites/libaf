@@ -95,7 +95,7 @@ void libaf_spectral_moments (const libaf_value *amplitudes, const libaf_value *f
     }
 
     v = vNum / den;
-    s = sNum / (den * pow (v, 1.5f));
+    s = sNum / (den * pow (v, 1.5));
     k = kNum / (den * v * v);
 
     *mean = m;
