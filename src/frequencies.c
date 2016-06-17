@@ -21,9 +21,9 @@ void libaf_mel_to_hertz (const libaf_value *in, libaf_value *out, int size)
     }
 }
 
-inline libaf_value libaf_hertz_to_bark_single (libaf_value in)
+static inline libaf_value libaf_hertz_to_bark_single (libaf_value in)
 {
-    libaf_value z = (26.81 * in / (1960.0 + f)) - 0.53;
+    libaf_value z = (26.81 * in / (1960.0 + in)) - 0.53;
 
     if (z < 2.0)
         z += 0.15 * (2 - z);
@@ -43,12 +43,12 @@ void libaf_hertz_to_bark (const libaf_value *in, libaf_value *out, int size)
     }
 }
 
-inline libaf_value libaf_bark_to_hertz_single (libaf_value in)
+static inline libaf_value libaf_bark_to_hertz_single (libaf_value in)
 {
     if (in < 2.0)
         in = (in - 0.3) / 0.85;
     else if (in > 20.1)
-        in -= (in + 4.422) / 1.22;
+        in = (in + 4.422) / 1.22;
 
     return 1960.0 * (in + 0.53) / (26.28 - in);
 }
