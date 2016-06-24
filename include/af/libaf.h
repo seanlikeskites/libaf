@@ -59,9 +59,18 @@ libaf_value libaf_jensen_irregularity (const libaf_value *amplitudes, int size, 
 libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int size, libaf_value rms);
 libaf_value libaf_spectral_flatness (libaf_value sum, libaf_value prod, int size);
 
+/* band things */
+struct libaf_bands
+{
+    int nBands;
+    int *bands;
+};
+struct libaf_bands* libaf_alloc_bands (int nBands);
+void libaf_free_bands (struct libaf_bands *bands);
+void libaf_sum_band_energies (const libaf_value *magnitudeSpectrum, const struct libaf_bands *bands, 
+                              libaf_value *bandEnergies);
+
 /* bark band things */
-struct libaf_bark_band_limits;
-struct libaf_bark_band_limits* libaf_init_bark_band_limits (libaf_value fs, int size);
-void libaf_free_bark_band_limits (struct libaf_bark_band_limits *limits);
+struct libaf_bands* libaf_init_bark_bands (libaf_value fs, int size);
 
 #endif /* LIBAF_H_INCLUDED */
