@@ -1,0 +1,3 @@
+[submodule "atfft"]
+	path = atfft
+	url = https://github.com/seanlikeskites/atfft.git
