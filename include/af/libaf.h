@@ -1,6 +1,8 @@
 #ifndef LIBAF_H_INCLUDED
 #define LIBAF_H_INCLUDED
 
+#include <atfft/atfft_shared.h>
+
 /** Some typdefs for changing the type libaf works with. \cond */
 #if defined(LIBAF_TYPE_FLOAT)
     typedef float libaf_value;
@@ -28,6 +30,9 @@ libaf_value libaf_sum (const libaf_value *signal, int size);
 libaf_value libaf_sum_of_squares (const libaf_value *signal, int size);
 libaf_value libaf_product (const libaf_value *signal, int size);
 libaf_value libaf_rms (libaf_value sumOfSquares, int length);
+
+/* spectra */
+void libaf_magnitude_spectrum (const atfft_complex *spectrum, libaf_value *magnitudeSpectrum, int size);
 
 /* statistical moments */
 libaf_value libaf_mean (const libaf_value *signal, int size);
