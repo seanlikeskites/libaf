@@ -32,6 +32,7 @@ libaf_value libaf_product (const libaf_value *signal, int size);
 libaf_value libaf_rms (libaf_value sumOfSquares, int length);
 
 /* spectra */
+void libaf_spectrum_frequencies (libaf_value *frequencies, libaf_value fs, int size);
 void libaf_magnitude_spectrum (const atfft_complex *spectrum, libaf_value *magnitudeSpectrum, int size);
 
 /* statistical moments */
