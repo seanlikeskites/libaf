@@ -1,7 +1,7 @@
 #include <math.h>
 #include <af/libaf.h>
 
-void libaf_hertz_to_mel (const libaf_value *in, libaf_value *out, int size)
+void af_hertz_to_mel (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
@@ -11,7 +11,7 @@ void libaf_hertz_to_mel (const libaf_value *in, libaf_value *out, int size)
     }
 }
 
-void libaf_mel_to_hertz (const libaf_value *in, libaf_value *out, int size)
+void af_mel_to_hertz (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
@@ -21,9 +21,9 @@ void libaf_mel_to_hertz (const libaf_value *in, libaf_value *out, int size)
     }
 }
 
-static inline libaf_value libaf_hertz_to_bark_single (libaf_value in)
+static inline af_value af_hertz_to_bark_single (af_value in)
 {
-    libaf_value z = (26.81 * in / (1960.0 + in)) - 0.53;
+    af_value z = (26.81 * in / (1960.0 + in)) - 0.53;
 
     if (z < 2.0)
         z += 0.15 * (2 - z);
@@ -33,17 +33,17 @@ static inline libaf_value libaf_hertz_to_bark_single (libaf_value in)
     return z;
 }
 
-void libaf_hertz_to_bark (const libaf_value *in, libaf_value *out, int size)
+void af_hertz_to_bark (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = libaf_hertz_to_bark_single (in [i]);
+        out [i] = af_hertz_to_bark_single (in [i]);
     }
 }
 
-static inline libaf_value libaf_bark_to_hertz_single (libaf_value in)
+static inline af_value af_bark_to_hertz_single (af_value in)
 {
     if (in < 2.0)
         in = (in - 0.3) / 0.85;
@@ -53,12 +53,12 @@ static inline libaf_value libaf_bark_to_hertz_single (libaf_value in)
     return 1960.0 * (in + 0.53) / (26.28 - in);
 }
 
-void libaf_bark_to_hertz (const libaf_value *in, libaf_value *out, int size)
+void af_bark_to_hertz (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = libaf_bark_to_hertz_single (in [i]);
+        out [i] = af_bark_to_hertz_single (in [i]);
     }
 }

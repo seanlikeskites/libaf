@@ -2,10 +2,10 @@
 #include <atfft/atfft.h>
 #include <math.h>
 
-void libaf_spectrum_frequencies (libaf_value *frequencies, libaf_value fs, int size)
+void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size)
 {
     int nBins = floor (size / 2) + 1;
-    libaf_value binWidth = fs / size;
+    af_value binWidth = fs / size;
     int i = 0;
 
     for (i = 0; i < nBins; ++i)
@@ -14,7 +14,7 @@ void libaf_spectrum_frequencies (libaf_value *frequencies, libaf_value fs, int s
     }
 }
 
-void libaf_magnitude_spectrum (const atfft_complex *spectrum, libaf_value *magnitudeSpectrum, int size)
+void af_magnitude_spectrum (const atfft_complex *spectrum, af_value *magnitudeSpectrum, int size)
 {
     int nBins = floor (size / 2) + 1;
     int i = 0;

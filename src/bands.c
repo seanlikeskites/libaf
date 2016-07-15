@@ -1,9 +1,9 @@
 #include <af/libaf.h>
 #include <stdlib.h>
 
-struct libaf_bands* libaf_alloc_bands (int nBands)
+struct af_bands* af_alloc_bands (int nBands)
 {
-    struct libaf_bands *b;
+    struct af_bands *b;
 
     if (!(b = malloc (sizeof (*b))))
         return NULL;
@@ -19,7 +19,7 @@ struct libaf_bands* libaf_alloc_bands (int nBands)
     return b;
 }
 
-void libaf_free_bands (struct libaf_bands *bands)
+void af_free_bands (struct af_bands *bands)
 {
     if (bands)
     {
@@ -28,8 +28,8 @@ void libaf_free_bands (struct libaf_bands *bands)
     }
 }
 
-void libaf_sum_band_energies (const libaf_value *magnitudeSpectrum, const struct libaf_bands *bands, 
-                              libaf_value *bandEnergies)
+void af_sum_band_energies (const af_value *magnitudeSpectrum, const struct af_bands *bands, 
+                           af_value *bandEnergies)
 {
     int i = 0;
 
@@ -38,6 +38,6 @@ void libaf_sum_band_energies (const libaf_value *magnitudeSpectrum, const struct
         int bandStart = bands->bands [2 * i];
         int bandSize = bands->bands [2 * i + 1];
 
-        bandEnergies [i] = libaf_sum_of_squares (magnitudeSpectrum + bandStart, bandSize);
+        bandEnergies [i] = af_sum_of_squares (magnitudeSpectrum + bandStart, bandSize);
     }
 }

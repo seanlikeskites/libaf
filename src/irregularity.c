@@ -1,9 +1,9 @@
 #include <math.h>
 #include <af/libaf.h>
 
-libaf_value libaf_krimphoff_irregularity (const libaf_value *amplitudes, int size)
+af_value af_krimphoff_irregularity (const af_value *amplitudes, int size)
 {
-    libaf_value sum = 0;
+    af_value sum = 0;
     int i = 0;
 
     for (i = 1; i < (size - 1); ++i)
@@ -15,9 +15,9 @@ libaf_value libaf_krimphoff_irregularity (const libaf_value *amplitudes, int siz
     return log10 (20 * sum);
 }
 
-libaf_value libaf_jensen_irregularity (const libaf_value *amplitudes, int size, libaf_value sumOfSquares)
+af_value af_jensen_irregularity (const af_value *amplitudes, int size, af_value sumOfSquares)
 {
-    libaf_value sum = 0;
+    af_value sum = 0;
     int i = 0;
 
     for (i = 0; i < (size - 1); ++i)
@@ -30,14 +30,14 @@ libaf_value libaf_jensen_irregularity (const libaf_value *amplitudes, int size, 
     return sum / sumOfSquares;
 }
 
-libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int size, libaf_value rms)
+af_value af_beauchamp_irregularity (const af_value *amplitudes, int size, af_value rms)
 {
-    libaf_value num = 0, den = 0;
+    af_value num = 0, den = 0;
     int i = 0;
 
     for (i = 1; i < (size - 1); ++i)
     {
-        libaf_value m = (amplitudes [i - 1] + amplitudes [i] + amplitudes [i + 1]) / 3;
+        af_value m = (amplitudes [i - 1] + amplitudes [i] + amplitudes [i + 1]) / 3;
         num += m * fabs (amplitudes [i] - m);
         den += m;
     }
@@ -47,8 +47,8 @@ libaf_value libaf_beauchamp_irregularity (const libaf_value *amplitudes, int siz
     return num / den;
 }
 
-libaf_value libaf_spectral_flatness (libaf_value sum, libaf_value prod, int size)
+af_value af_spectral_flatness (af_value sum, af_value prod, int size)
 {
-    libaf_value num = size * pow (prod, 1.0 / (libaf_value) size);
+    af_value num = size * pow (prod, 1.0 / (af_value) size);
     return num / sum;
 }
