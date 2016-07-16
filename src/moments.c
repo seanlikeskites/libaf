@@ -14,6 +14,12 @@ af_value af_mean (const af_value *signal, int size)
     return sum / size;
 }
 
+void af_mean_a (void **args)
+{
+    *(af_value*) args [0] = af_mean ((af_value*) args [1], 
+                                     *(int*) args [2]);
+}
+
 af_value af_variance (const af_value *signal, int size, af_value mean)
 {
     af_value sum = 0;
@@ -26,6 +32,13 @@ af_value af_variance (const af_value *signal, int size, af_value mean)
     }
 
     return sum / size;
+}
+
+void af_variance_a (void **args)
+{
+    *(af_value*) args [0] = af_variance ((af_value*) args [1], 
+                                         *(int*) args [2],
+                                         *(af_value*) args [3]);
 }
 
 af_value af_skewness (const af_value *signal, int size, af_value mean, af_value variance)
@@ -42,6 +55,14 @@ af_value af_skewness (const af_value *signal, int size, af_value mean, af_value 
     return sum / (size * pow (variance, 1.5));
 }
 
+void af_skewness_a (void **args)
+{
+    *(af_value*) args [0] = af_skewness ((af_value*) args [1], 
+                                         *(int*) args [2],
+                                         *(af_value*) args [3],
+                                         *(af_value*) args [4]);
+}
+
 af_value af_kurtosis (const af_value *signal, int size, af_value mean, af_value variance)
 {
     af_value sum = 0;
@@ -54,6 +75,14 @@ af_value af_kurtosis (const af_value *signal, int size, af_value mean, af_value 
     }
 
     return sum / (size * variance * variance);
+}
+
+void af_kurtosis_a (void **args)
+{
+    *(af_value*) args [0] = af_kurtosis ((af_value*) args [1], 
+                                         *(int*) args [2],
+                                         *(af_value*) args [3],
+                                         *(af_value*) args [4]);
 }
 
 void af_moments (const af_value *signal, int size, af_value *mean, af_value *variance,
@@ -92,4 +121,10 @@ void af_moments (const af_value *signal, int size, af_value *mean, af_value *var
     *variance = v;
     *skewness = s;
     *kurtosis = k;
+}
+
+void af_moments_a (void **args)
+{
+    af_moments ((af_value*) args [0], *(int*) args [1], 
+                (af_value*) args [2], (af_value*) args [3], (af_value*) args [4], (af_value*) args [5]);
 }

@@ -28,7 +28,8 @@ void af_free_bands (struct af_bands *bands)
     }
 }
 
-void af_sum_band_energies (const af_value *magnitudeSpectrum, const struct af_bands *bands, 
+void af_sum_band_energies (const af_value *magnitudeSpectrum, 
+                           const struct af_bands *bands, 
                            af_value *bandEnergies)
 {
     int i = 0;
@@ -40,4 +41,11 @@ void af_sum_band_energies (const af_value *magnitudeSpectrum, const struct af_ba
 
         bandEnergies [i] = af_sum_of_squares (magnitudeSpectrum + bandStart, bandSize);
     }
+}
+
+void af_sum_band_energies_a (void **args)
+{
+    af_sum_band_energies ((af_value*) args [0], 
+                          (struct af_bands*) args [1], 
+                          (af_value*) args [2]);
 }

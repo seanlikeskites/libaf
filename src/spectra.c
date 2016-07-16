@@ -32,3 +32,8 @@ void af_magnitude_spectrum (const atfft_complex *spectrum, af_value *magnitudeSp
         magnitudeSpectrum [i] = 2.0 * atfft_abs (spectrum [i]) / size;
     }
 }
+
+void af_magnitude_spectrum_a (void **args)
+{
+    af_magnitude_spectrum ((atfft_complex*) args [0], (af_value*) args [1], *(int*) args [2]);
+}

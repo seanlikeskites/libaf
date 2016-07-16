@@ -15,11 +15,11 @@ af_value af_spectral_mean (const af_value *amplitudes, const af_value *frequenci
     return num / den;
 }
 
-void af_spectral_mean_a (void **args, void **results)
+void af_spectral_mean_a (void **args)
 {
-    *(af_value*) results [0] = af_spectral_mean ((af_value*) args [0], 
-                                                 (af_value*) args [1],
-                                                 *(int*) args [2]);
+    *(af_value*) args [0] = af_spectral_mean ((af_value*) args [1], 
+                                              (af_value*) args [2],
+                                              *(int*) args [3]);
 }
 
 af_value af_spectral_variance (const af_value *amplitudes, const af_value *frequencies,
@@ -38,6 +38,14 @@ af_value af_spectral_variance (const af_value *amplitudes, const af_value *frequ
     return num / den;
 }
 
+void af_spectral_variance_a (void **args)
+{
+    *(af_value*) args [0] = af_spectral_variance ((af_value*) args [1], 
+                                                  (af_value*) args [2],
+                                                  *(int*) args [3],
+                                                  *(af_value*) args [4]);
+}
+
 af_value af_spectral_skewness (const af_value *amplitudes, const af_value *frequencies,
                                int size, af_value spectralMean, af_value spectralVariance)
 {
@@ -54,6 +62,15 @@ af_value af_spectral_skewness (const af_value *amplitudes, const af_value *frequ
     return num / (den * pow (spectralVariance, 1.5));
 }
 
+void af_spectral_skewness_a (void **args)
+{
+    *(af_value*) args [0] = af_spectral_skewness ((af_value*) args [1], 
+                                                  (af_value*) args [2],
+                                                  *(int*) args [3],
+                                                  *(af_value*) args [4],
+                                                  *(af_value*) args [5]);
+}
+
 af_value af_spectral_kurtosis (const af_value *amplitudes, const af_value *frequencies,
                                int size, af_value spectralMean, af_value spectralVariance)
 {
@@ -68,6 +85,15 @@ af_value af_spectral_kurtosis (const af_value *amplitudes, const af_value *frequ
     }
 
     return num / (den * spectralVariance * spectralVariance);
+}
+
+void af_spectral_kurtosis_a (void **args)
+{
+    *(af_value*) args [0] = af_spectral_kurtosis ((af_value*) args [1], 
+                                                  (af_value*) args [2],
+                                                  *(int*) args [3],
+                                                  *(af_value*) args [4],
+                                                  *(af_value*) args [5]);
 }
 
 void af_spectral_moments (const af_value *amplitudes, const af_value *frequencies, int size,
@@ -109,4 +135,10 @@ void af_spectral_moments (const af_value *amplitudes, const af_value *frequencie
     *variance = v;
     *skewness = s;
     *kurtosis = k;
+}
+
+void af_spectral_moments_a (void **args)
+{
+    af_spectral_moments ((af_value*) args [0], (af_value*) args [1], *(int*) args [2], 
+                         (af_value*) args [3], (af_value*) args [4], (af_value*) args [5], (af_value*) args [6]);
 }

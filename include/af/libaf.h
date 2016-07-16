@@ -78,7 +78,8 @@ struct af_bands
 };
 struct af_bands* af_alloc_bands (int nBands);
 void af_free_bands (struct af_bands *bands);
-void af_sum_band_energies (const af_value *magnitudeSpectrum, const struct af_bands *bands, 
+void af_sum_band_energies (const af_value *magnitudeSpectrum, 
+                           const struct af_bands *bands, 
                            af_value *bandEnergies);
 
 /* bark band things */
