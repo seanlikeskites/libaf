@@ -23,12 +23,16 @@ extern "C"
 
 /* frequency conversion */
 /* hertz to mel as per O'Shaughnessy (1987) */
-void af_hertz_to_mel (const af_value *in, af_value *out, int size);
-void af_mel_to_hertz (const af_value *in, af_value *out, int size);
+af_value af_hertz_to_mel (af_value in);
+void af_hertz_to_mel_array (const af_value *in, af_value *out, int size);
+af_value af_mel_to_hertz (af_value in);
+void af_mel_to_hertz_array (const af_value *in, af_value *out, int size);
 
 /* hertz to bark as per Traunmuller (1990) */
-void af_hertz_to_bark (const af_value *in, af_value *out, int size);
-void af_bark_to_hertz (const af_value *in, af_value *out, int size);
+af_value af_hertz_to_bark (af_value in);
+void af_hertz_to_bark_array (const af_value *in, af_value *out, int size);
+af_value af_bark_to_hertz (af_value in);
+void af_bark_to_hertz_array (const af_value *in, af_value *out, int size);
 
 /* utils */
 af_value af_sum (const af_value *signal, int size);
@@ -86,6 +90,9 @@ void af_sum_band_energies (const af_value *powerSpectrum,
 
 /* bark band things */
 struct af_bands* af_init_bark_bands (af_value fs, int size);
+
+/* mfccs */
+void af_init_mfccs (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
 
 #ifdef __cplusplus
 }

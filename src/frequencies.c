@@ -1,27 +1,37 @@
 #include <math.h>
 #include <af/libaf.h>
 
-void af_hertz_to_mel (const af_value *in, af_value *out, int size)
+af_value af_hertz_to_mel (af_value in)
+{
+        return 1127.0 * log (1.0 + in / 700.0);
+}
+
+void af_hertz_to_mel_array (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = 1127.0 * log (1.0 + in [i] / 700.0);
+        out [i] = af_hertz_to_mel (in [i]);
     }
 }
 
-void af_mel_to_hertz (const af_value *in, af_value *out, int size)
+af_value af_mel_to_hertz (af_value in)
+{
+    return 700.0 * (exp (in / 1127.0) - 1.0);
+}
+
+void af_mel_to_hertz_array (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = 700.0 * (exp (in [i] / 1127.0) - 1.0);
+        out [i] = af_mel_to_hertz (in [i]);
     }
 }
 
-static inline af_value af_hertz_to_bark_single (af_value in)
+af_value af_hertz_to_bark (af_value in)
 {
     af_value z = (26.81 * in / (1960.0 + in)) - 0.53;
 
@@ -33,17 +43,17 @@ static inline af_value af_hertz_to_bark_single (af_value in)
     return z;
 }
 
-void af_hertz_to_bark (const af_value *in, af_value *out, int size)
+void af_hertz_to_bark_array (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = af_hertz_to_bark_single (in [i]);
+        out [i] = af_hertz_to_bark (in [i]);
     }
 }
 
-static inline af_value af_bark_to_hertz_single (af_value in)
+af_value af_bark_to_hertz (af_value in)
 {
     if (in < 2.0)
         in = (in - 0.3) / 0.85;
@@ -53,12 +63,12 @@ static inline af_value af_bark_to_hertz_single (af_value in)
     return 1960.0 * (in + 0.53) / (26.28 - in);
 }
 
-void af_bark_to_hertz (const af_value *in, af_value *out, int size)
+void af_bark_to_hertz_array (const af_value *in, af_value *out, int size)
 {
     int i = 0;
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = af_bark_to_hertz_single (in [i]);
+        out [i] = af_bark_to_hertz (in [i]);
     }
 }
