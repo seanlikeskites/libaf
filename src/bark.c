@@ -23,7 +23,7 @@ struct af_bands* af_init_bark_bands (af_value fs, int size)
         --nBands;
     }
 
-    if (!(b = af_alloc_bands (nBands)))
+    if (!(b = af_alloc_bands (nBands, NULL)))
         return NULL;
 
     for (i = 0; i < nBands; ++i)
@@ -34,8 +34,8 @@ struct af_bands* af_init_bark_bands (af_value fs, int size)
         if (bandEnd >= nBins)
             bandEnd = nBins - 1;
 
-        b->bands [2 * i] = bandStart;
-        b->bands [2 * i + 1] = bandEnd - bandStart + 1;
+        b->starts [i] = bandStart;
+        b->widths [i] = bandEnd - bandStart + 1;
     }
 
     return b;

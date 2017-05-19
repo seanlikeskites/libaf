@@ -17,7 +17,7 @@ void af_mel_to_hertz (const af_value *in, af_value *out, int size)
 
     for (i = 0; i < size; ++i)
     {
-        out [i] = 700.0 * (exp (in [i] / 1127.0) - 1);
+        out [i] = 700.0 * (exp (in [i] / 1127.0) - 1.0);
     }
 }
 
@@ -26,7 +26,7 @@ static inline af_value af_hertz_to_bark_single (af_value in)
     af_value z = (26.81 * in / (1960.0 + in)) - 0.53;
 
     if (z < 2.0)
-        z += 0.15 * (2 - z);
+        z += 0.15 * (2.0 - z);
     else if (z > 20.1)
         z += 0.22 * (z - 20.1);
 

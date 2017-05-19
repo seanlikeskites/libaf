@@ -74,11 +74,13 @@ af_value af_spectral_flatness (af_value sum, af_value prod, int size);
 struct af_bands
 {
     int nBands;
-    int *bands;
+    int *starts;
+    int *widths;
+    af_value **windows;
 };
-struct af_bands* af_alloc_bands (int nBands);
+struct af_bands* af_alloc_bands (int nBands, int *widths);
 void af_free_bands (struct af_bands *bands);
-void af_sum_band_energies (const af_value *magnitudeSpectrum, 
+void af_sum_band_energies (const af_value *powerSpectrum, 
                            const struct af_bands *bands, 
                            af_value *bandEnergies);
 
