@@ -92,7 +92,7 @@ void af_sum_band_energies (const af_value *powerSpectrum,
 struct af_bands* af_init_bark_bands (af_value fs, int size);
 
 /* mfccs */
-void af_init_mfccs (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
+struct af_bands* af_init_mfccs (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
 
 #ifdef __cplusplus
 }
