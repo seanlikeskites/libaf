@@ -40,6 +40,8 @@ af_value af_sum_of_squares (const af_value *signal, int size);
 af_value af_product (const af_value *signal, int size);
 af_value af_rms (af_value sumOfSquares, int length);
 
+void af_log_array (const af_value *in, af_value *out, int size);
+
 /* spectra */
 void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size);
 void af_magnitude_spectrum (const atfft_complex *spectrum, af_value *magnitudeSpectrum, int size);
@@ -92,7 +94,11 @@ void af_sum_band_energies (const af_value *powerSpectrum,
 struct af_bands* af_init_bark_bands (af_value fs, int size);
 
 /* mfccs */
-struct af_bands* af_init_mfccs (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
+struct af_mfcc_config;
+struct af_bands* af_init_mfcc_bands (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
+struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands, int nCoeffs);
+void af_destroy_mfcc_config (struct af_mfcc_config *config);
+void af_mfccs (const struct af_mfcc_config *config, const af_value *powerSpectrum, af_value *mfccs);
 
 #ifdef __cplusplus
 }

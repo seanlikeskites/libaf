@@ -1,6 +1,8 @@
 #include <af/libaf.h>
+#include <atfft/atfft_dct.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 void af_generate_mfcc_window (af_value *window, int middle, int end, int width)
 {
@@ -21,7 +23,7 @@ void af_generate_mfcc_window (af_value *window, int middle, int end, int width)
     }
 }
 
-struct af_bands* af_init_mfccs (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands)
+struct af_bands* af_init_mfcc_bands (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands)
 {
     af_value binWidth = fs / size;
     int nBins = floor (size / 2) + 1;
@@ -90,4 +92,74 @@ struct af_bands* af_init_mfccs (af_value fs, int size, af_value minFreq, af_valu
     free (bounds);
 
     return b;
+}
+
+struct af_mfcc_config
+{
+    int nCoeffs;
+    struct af_bands *bands;
+    struct atfft_dct *dct;
+    af_value *bandEnergies;
+    af_value *dctCoeffs;
+};
+
+struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands, int nCoeffs)
+{
+    struct af_mfcc_config *c;
+
+    if (!(c = malloc (sizeof (*c))))
+        return NULL;
+
+    c->bands = af_init_mfcc_bands (fs, size, minFreq, maxFreq, nBands);
+    c->dct = NULL;
+    c->bandEnergies = NULL;
+    c->dctCoeffs = NULL;
+
+    if (!c->bands)
+    {
+        af_destroy_mfcc_config (c);
+        return NULL;
+    }
+
+    nBands = c->bands->nBands;
+    c->dct = atfft_dct_create (nBands, ATFFT_FORWARD);
+    c->bandEnergies = malloc (nBands * sizeof (*(c->bandEnergies)));
+    c->dctCoeffs = malloc (nBands * sizeof (*(c->dctCoeffs)));
+
+    if (!(c->dct && c->bandEnergies && c->dctCoeffs))
+    {
+        af_destroy_mfcc_config (c);
+        return NULL;
+    }
+
+    if (nCoeffs > nBands)
+        c->nCoeffs = nBands;
+    else
+        c->nCoeffs = nCoeffs;
+
+    return c;
+}
+
+void af_destroy_mfcc_config (struct af_mfcc_config *config)
+{
+    if (config)
+    {
+        free (config->dctCoeffs);
+        free (config->bandEnergies);
+        atfft_dct_destroy (config->dct);
+        af_free_bands (config->bands);
+        free (config);
+    }
+}
+
+void af_mfccs (const struct af_mfcc_config *config, const af_value *powerSpectrum, af_value *mfccs)
+{
+    int nBands = config->bands->nBands;
+    int nCoeffs = config->nCoeffs;
+    int dataSize = nCoeffs * sizeof (*mfccs);
+
+    af_sum_band_energies (powerSpectrum, config->bands, config->bandEnergies);
+    af_log_array (config->bandEnergies, config->bandEnergies, nBands);
+    atfft_dct_transform (config->dct, config->bandEnergies, config->dctCoeffs);
+    memcpy (mfccs, config->dctCoeffs, dataSize);
 }

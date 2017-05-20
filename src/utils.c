@@ -64,3 +64,13 @@ void af_rms_a (void **args)
 {
     *(af_value*) args [0] = af_rms (*(af_value*) args [1], *(int*) args [2]);
 }
+
+void af_log_array (const af_value *in, af_value *out, int size)
+{
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        out [i] = log (in [i]);
+    }
+}
