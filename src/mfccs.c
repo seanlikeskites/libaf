@@ -1,4 +1,4 @@
-#include <af/libaf.h>
+#include <libaf/af.h>
 #include <atfft/atfft_dct.h>
 #include <stdlib.h>
 #include <math.h>
@@ -103,7 +103,9 @@ struct af_mfcc_config
     af_value *dctCoeffs;
 };
 
-struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands, int nCoeffs)
+struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, 
+                                              af_value minFreq, af_value maxFreq, 
+                                              int nBands, int nCoeffs)
 {
     struct af_mfcc_config *c;
 

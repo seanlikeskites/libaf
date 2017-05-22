@@ -96,7 +96,9 @@ struct af_bands* af_init_bark_bands (af_value fs, int size);
 /* mfccs */
 struct af_mfcc_config;
 struct af_bands* af_init_mfcc_bands (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands);
-struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, af_value minFreq, af_value maxFreq, int nBands, int nCoeffs);
+struct af_mfcc_config* af_create_mfcc_config (af_value fs, int size, 
+                                              af_value minFreq, af_value maxFreq, 
+                                              int nBands, int nCoeffs);
 void af_destroy_mfcc_config (struct af_mfcc_config *config);
 void af_mfccs (const struct af_mfcc_config *config, const af_value *powerSpectrum, af_value *mfccs);
 

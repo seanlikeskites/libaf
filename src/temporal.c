@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <math.h>
-#include <af/libaf.h>
+#include <libaf/af.h>
 
 af_value af_zero_crossing_rate (const af_value *signal, int size)
 {

@@ -1,5 +1,5 @@
 #include <math.h>
-#include <af/libaf.h>
+#include <libaf/af.h>
 
 af_value af_spectral_mean (const af_value *amplitudes, const af_value *frequencies, int size)
 {

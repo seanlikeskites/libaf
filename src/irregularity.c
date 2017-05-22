@@ -1,5 +1,5 @@
 #include <math.h>
-#include <af/libaf.h>
+#include <libaf/af.h>
 
 af_value af_krimphoff_irregularity (const af_value *amplitudes, int size)
 {

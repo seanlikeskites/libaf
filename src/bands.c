@@ -1,4 +1,4 @@
-#include <af/libaf.h>
+#include <libaf/af.h>
 #include <stdlib.h>
 
 struct af_bands* af_alloc_bands (int nBands, int *widths)

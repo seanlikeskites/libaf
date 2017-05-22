@@ -1,4 +1,4 @@
-#include <af/libaf.h>
+#include <libaf/af.h>
 #include <stdlib.h>
 #include <math.h>
 

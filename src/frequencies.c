@@ -1,5 +1,5 @@
 #include <math.h>
-#include <af/libaf.h>
+#include <libaf/af.h>
 
 af_value af_hertz_to_mel (af_value in)
 {
