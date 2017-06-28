@@ -16,7 +16,9 @@ extern "C"
     typedef long double af_value;
 
 #else
-#   define LIBAF_TYPE_DOUBLE
+#   if !defined(LIBAF_TYPE_DOUBLE)
+#       define LIBAF_TYPE_DOUBLE
+#   endif
     typedef double af_value;
 #endif
 /** \endcond */
