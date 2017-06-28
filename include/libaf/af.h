@@ -46,7 +46,7 @@ void af_log_array (const af_value *in, af_value *out, int size);
 
 /* spectra */
 void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size);
-void af_magnitude_spectrum (const atfft_complex *spectrum, af_value *magnitudeSpectrum, int size);
+void af_magnitude_spectrum (atfft_complex *spectrum, af_value *magnitudeSpectrum, int size);
 
 /* statistical moments */
 af_value af_mean (const af_value *signal, int size);

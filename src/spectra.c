@@ -14,7 +14,7 @@ void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size)
     }
 }
 
-void af_magnitude_spectrum (const atfft_complex *spectrum, af_value *magnitudeSpectrum, int size)
+void af_magnitude_spectrum (atfft_complex *spectrum, af_value *magnitudeSpectrum, int size)
 {
     int nBins = floor (size / 2) + 1;
     int i = 0;
