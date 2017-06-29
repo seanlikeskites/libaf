@@ -47,11 +47,14 @@ af_value af_bark_to_hertz (af_value in);
 void af_bark_to_hertz_array (const af_value *in, af_value *out, int size);
 
 /* utils */
+af_value af_round (af_value in);
+
 af_value af_sum (const af_value *signal, int size);
 af_value af_sum_of_squares (const af_value *signal, int size);
 af_value af_product (const af_value *signal, int size);
 af_value af_rms (af_value sumOfSquares, int length);
 
+void af_square_array (const af_value *in, af_value *out, int size);
 void af_log_array (const af_value *in, af_value *out, int size);
 
 /* spectra */
@@ -87,6 +90,14 @@ af_value af_krimphoff_irregularity (const af_value *amplitudes, int size);
 af_value af_jensen_irregularity (const af_value *amplitudes, int size, af_value sumOfSquares);
 af_value af_beauchamp_irregularity (const af_value *amplitudes, int size, af_value rms);
 af_value af_spectral_flatness (af_value sum, af_value prod, int size);
+
+/* partial features */
+int af_is_harmonic (af_value frequency, af_value f0, af_value threshold);
+int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
+                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, 
+                          int size, af_value f0, af_value threshold);
+af_value af_inharmonicity (const af_value *amplitudes, const af_value *frequencies,
+                           int size, af_value f0);
 
 /* band things */
 struct af_bands
