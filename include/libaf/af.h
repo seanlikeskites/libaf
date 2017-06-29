@@ -1,8 +1,6 @@
 #ifndef LIBAF_H_INCLUDED
 #define LIBAF_H_INCLUDED
 
-#include <atfft/atfft_shared.h>
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -10,18 +8,30 @@ extern "C"
 
 /** Some typdefs for changing the type libaf works with. \cond */
 #if defined(LIBAF_TYPE_FLOAT)
+#   if !defined(ATFFT_TYPE_FLOAT)
+#       define ATFFT_TYPE__FLOAT
+#   endif
     typedef float af_value;
 
 #elif defined(LIBAF_TYPE_LONG_DOUBLE)
+#   if !defined(ATFFT_TYPE_LONG_DOUBLE)
+#       define ATFFT_TYPE__LONG_DOUBLE
+#   endif
     typedef long double af_value;
 
 #else
 #   if !defined(LIBAF_TYPE_DOUBLE)
 #       define LIBAF_TYPE_DOUBLE
 #   endif
+
+#   if !defined(ATFFT_TYPE_DOUBLE)
+#       define ATFFT_TYPE_DOUBLE
+#   endif
     typedef double af_value;
 #endif
 /** \endcond */
+
+#include <atfft/atfft_shared.h>
 
 /* frequency conversion */
 /* hertz to mel as per O'Shaughnessy (1987) */
