@@ -34,6 +34,11 @@ af_value af_variance (const af_value *signal, int size, af_value mean)
     return sum / size;
 }
 
+af_value af_standard_deviation (af_value variance)
+{
+    return sqrt (variance);
+}
+
 void af_variance_a (void **args)
 {
     *(af_value*) args [0] = af_variance ((af_value*) args [1], 

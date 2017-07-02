@@ -47,6 +47,8 @@ af_value af_bark_to_hertz (af_value in);
 void af_bark_to_hertz_array (const af_value *in, af_value *out, int size);
 
 /* utils */
+af_value af_min (af_value a, af_value b);
+af_value af_max (af_value a, af_value b);
 af_value af_round (af_value in);
 
 af_value af_sum (const af_value *signal, int size);
@@ -64,6 +66,7 @@ void af_magnitude_spectrum (atfft_complex *spectrum, af_value *magnitudeSpectrum
 /* statistical moments */
 af_value af_mean (const af_value *signal, int size);
 af_value af_variance (const af_value *signal, int size, af_value mean);
+af_value af_standard_deviation (af_value variance);
 af_value af_skewness (const af_value *signal, int size, af_value mean, af_value variance);
 af_value af_kurtosis (const af_value *signal, int size, af_value mean, af_value variance);
 void af_moments (const af_value *signal, int size, af_value *mean, af_value *variance,
@@ -92,6 +95,9 @@ af_value af_beauchamp_irregularity (const af_value *amplitudes, int size, af_val
 af_value af_spectral_flatness (af_value sum, af_value prod, int size);
 
 /* partial features */
+int af_spectral_partials (const af_value *ampltiudes, const af_value *frequencies,
+                          af_value *partialAmplitudes, af_value *partialFrequencies,
+                          int size, int separation, af_value prominence);
 int af_is_harmonic (af_value frequency, af_value f0, af_value threshold);
 int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
                           af_value *harmonicAmplitudes, af_value *harmonicFrequencies, 

@@ -1,6 +1,22 @@
 #include <math.h>
 #include <libaf/af.h>
 
+af_value af_min (af_value a, af_value b)
+{
+    if (a <= b)
+        return a;
+    else
+        return b;
+}
+
+af_value af_max (af_value a, af_value b)
+{
+    if (a >= b)
+        return a;
+    else
+        return b;
+}
+
 af_value af_round (af_value in)
 {
     if (in >= 0.0)
