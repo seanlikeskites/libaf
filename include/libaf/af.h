@@ -14,7 +14,7 @@ extern "C"
 #       define ATFFT_TYPE__FLOAT
 #   endif
     typedef float af_value;
-#   define AF_VALUE_MIX FLT_MIN
+#   define AF_VALUE_MIN FLT_MIN
 #   define AF_VALUE_MAX FLT_MAX
 
 #elif defined(LIBAF_TYPE_LONG_DOUBLE)
@@ -22,7 +22,7 @@ extern "C"
 #       define ATFFT_TYPE__LONG_DOUBLE
 #   endif
     typedef long double af_value;
-#   define AF_VALUE_MIX LDBL_MIN
+#   define AF_VALUE_MIN LDBL_MIN
 #   define AF_VALUE_MAX LDBL_MAX
 
 #else
@@ -34,7 +34,7 @@ extern "C"
 #       define ATFFT_TYPE_DOUBLE
 #   endif
     typedef double af_value;
-#   define AF_VALUE_MIX DBL_MIN
+#   define AF_VALUE_MIN DBL_MIN
 #   define AF_VALUE_MAX DBL_MAX
 #endif
 /** \endcond */
