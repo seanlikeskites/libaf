@@ -1,6 +1,8 @@
 #ifndef LIBAF_H_INCLUDED
 #define LIBAF_H_INCLUDED
 
+#include <float.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -12,12 +14,16 @@ extern "C"
 #       define ATFFT_TYPE__FLOAT
 #   endif
     typedef float af_value;
+#   define AF_VALUE_MIX FLT_MIN
+#   define AF_VALUE_MAX FLT_MAX
 
 #elif defined(LIBAF_TYPE_LONG_DOUBLE)
 #   if !defined(ATFFT_TYPE_LONG_DOUBLE)
 #       define ATFFT_TYPE__LONG_DOUBLE
 #   endif
     typedef long double af_value;
+#   define AF_VALUE_MIX LDBL_MIN
+#   define AF_VALUE_MAX LDBL_MAX
 
 #else
 #   if !defined(LIBAF_TYPE_DOUBLE)
@@ -28,6 +34,8 @@ extern "C"
 #       define ATFFT_TYPE_DOUBLE
 #   endif
     typedef double af_value;
+#   define AF_VALUE_MIX DBL_MIN
+#   define AF_VALUE_MAX DBL_MAX
 #endif
 /** \endcond */
 
@@ -58,6 +66,11 @@ af_value af_rms (af_value sumOfSquares, int length);
 
 void af_square_array (const af_value *in, af_value *out, int size);
 void af_log_array (const af_value *in, af_value *out, int size);
+
+af_value af_amplitude_to_db (af_value in);
+void af_amplitude_to_db_array (const af_value *in, af_value *out, int size);
+af_value af_db_to_amplitude (af_value in);
+void af_db_to_amplitude_array (const af_value *in, af_value *out, int size);
 
 /* spectra */
 void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size);
@@ -104,6 +117,18 @@ int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *par
                           int size, af_value f0, af_value threshold);
 af_value af_inharmonicity (const af_value *amplitudes, const af_value *frequencies,
                            int size, af_value f0);
+
+/* tristimulus */
+af_value af_band_proportion_of_energy (const af_value *amplitudes, const af_value *frequencies,
+                                       int size, af_value lowerBound, af_value upperBound);
+af_value af_tristimulus_1 (const af_value *amplitudes, const af_value *frequencies, 
+                           int size, af_value f0);
+af_value af_tristimulus_2 (const af_value *amplitudes, const af_value *frequencies,
+                           int size, af_value f0);
+af_value af_tristimulus_3 (const af_value *amplitudes, const af_value *frequencies,
+                           int size, af_value f0);
+void af_tristimuli (const af_value *amplitudes, const af_value *frequencies, 
+                    int size, af_value f0, af_value *t1, af_value *t2, af_value *t3);
 
 /* band things */
 struct af_bands
