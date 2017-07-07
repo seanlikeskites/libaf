@@ -56,7 +56,9 @@ void af_bark_to_hertz_array (const af_value *in, af_value *out, int size);
 
 /* utils */
 af_value af_min (af_value a, af_value b);
+af_value af_min_array (const af_value *in, int size);
 af_value af_max (af_value a, af_value b);
+af_value af_max_array (const af_value *in, int size);
 af_value af_round (af_value in);
 
 af_value af_sum (const af_value *signal, int size);
@@ -106,6 +108,14 @@ af_value af_krimphoff_irregularity (const af_value *amplitudes, int size);
 af_value af_jensen_irregularity (const af_value *amplitudes, int size, af_value sumOfSquares);
 af_value af_beauchamp_irregularity (const af_value *amplitudes, int size, af_value rms);
 af_value af_spectral_flatness (af_value sum, af_value prod, int size);
+
+/* spectral shape */
+af_value af_spectral_slope (const af_value *amplitudes, const af_value *frequencies, int size);
+af_value af_db_spectral_slope (const af_value *dbAmplitudes, const af_value *frequencies, int size);
+af_value af_spectral_crest (const af_value *amplitudes, int size, af_value sum);
+
+/* pitch tracking using YIN (de Cheveigne and Kawahara, 2002) */
+/* af_f0 (); */
 
 /* partial features */
 int af_spectral_partials (const af_value *ampltiudes, const af_value *frequencies,

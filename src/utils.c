@@ -9,12 +9,40 @@ af_value af_min (af_value a, af_value b)
         return b;
 }
 
+af_value af_min_array (const af_value *in, int size)
+{
+    af_value min = AF_VALUE_MAX;
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        if (in [i] < min)
+            min = in [i];
+    }
+
+    return min;
+}
+
 af_value af_max (af_value a, af_value b)
 {
     if (a >= b)
         return a;
     else
         return b;
+}
+
+af_value af_max_array (const af_value *in, int size)
+{
+    af_value max = AF_VALUE_MIN;
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        if (in [i] > max)
+            max = in [i];
+    }
+
+    return max;
 }
 
 af_value af_round (af_value in)
