@@ -44,3 +44,21 @@ af_value af_spectral_crest (const af_value *amplitudes, int size, af_value sum)
     af_value max = af_max_array (amplitudes, size);
     return size * max / sum;
 }
+
+af_value af_spectral_roll_off (const af_value *powers, const af_value *frequencies,
+                               int size, af_value proportion, af_value totalPower)
+{
+    af_value thresh = proportion * totalPower;
+    af_value sum = 0.0;
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        sum += powers [i];
+
+        if (sum >= thresh)
+            break;
+    }
+
+    return frequencies [i];
+}

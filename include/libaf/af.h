@@ -113,6 +113,8 @@ af_value af_spectral_flatness (af_value sum, af_value prod, int size);
 af_value af_spectral_slope (const af_value *amplitudes, const af_value *frequencies, int size);
 af_value af_db_spectral_slope (const af_value *dbAmplitudes, const af_value *frequencies, int size);
 af_value af_spectral_crest (const af_value *amplitudes, int size, af_value sum);
+af_value af_spectral_roll_off (const af_value *powers, const af_value *frequencies,
+                               int size, af_value proportion, af_value totalPower);
 
 /* pitch tracking using YIN (de Cheveigne and Kawahara, 2002) */
 /* af_f0 (); */
