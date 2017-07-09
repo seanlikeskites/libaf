@@ -166,3 +166,13 @@ void af_db_to_amplitude_array (const af_value *in, af_value *out, int size)
         out [i] = af_db_to_amplitude (in [i]);
     }
 }
+
+void af_zero_array (af_value *in, int size)
+{
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        in [i] = 0.0;
+    }
+}

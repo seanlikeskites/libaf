@@ -62,34 +62,6 @@ int af_spectral_partials (const af_value *amplitudes, const af_value *frequencie
     return nPartials;
 }
 
-int af_is_harmonic (af_value frequency, af_value f0, af_value threshold)
-{
-    af_value f0s = frequency / f0;
-    af_value d = fabs (f0s - af_round (f0s));
-
-    return d <= threshold;
-}
-
-int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
-                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, 
-                          int size, af_value f0, af_value threshold)
-{
-    int nHarmonics = 0;
-    int i = 0;
-
-    for (i = 0; i < size; ++i)
-    {
-        if (af_is_harmonic (partialFrequencies [i], f0, threshold))
-        {
-            harmonicAmplitudes [nHarmonics] = partialAmplitudes [i];
-            harmonicFrequencies [nHarmonics] = partialFrequencies [i];
-            ++nHarmonics;
-        }
-    }
-
-    return nHarmonics;
-}
-
 af_value af_inharmonicity (const af_value *powers, const af_value *frequencies,
                            int size, af_value f0)
 {
@@ -98,10 +70,70 @@ af_value af_inharmonicity (const af_value *powers, const af_value *frequencies,
 
     for (i = 0; i < size; ++i)
     {
-        af_value nearestHarmonic = f0 * af_round (frequencies [i] / f0);
-        num += powers [i] * fabs (frequencies [i] - nearestHarmonic);
+        af_value freq = frequencies [i];
+        af_value nearestHarmonicFreq = f0 * af_round (freq / f0);
+
+        num += powers [i] * fabs (freq - nearestHarmonicFreq);
         den += powers [i];
     }
 
     return 2.0 * num / (f0 * den);
 }
+
+int af_is_harmonic (af_value frequency, af_value f0, af_value threshold, int *order)
+{
+    af_value d = 0.0;
+    af_value f0s = frequency / f0;
+
+    *order = af_round (f0s);
+    d = fabs (f0s - *order);
+
+    return (d <= threshold) && (*order > 0);
+}
+
+void af_harmonic_powers (const af_value *powers, const af_value *frequencies, int size,
+                         af_value *harmonicPowers, int maxOrder,
+                         af_value f0, af_value threshold)
+{
+    int i = 0;
+
+    af_zero_array (harmonicPowers, maxOrder);
+
+    for (i = 0; i < size; ++i)
+    {
+        af_value freq = frequencies [i];
+        int harmonic = 0;
+        int order = 0;
+
+        af_is_harmonic (freq, f0, threshold, &order);
+
+        if (order > maxOrder)
+            break;
+        else if (harmonic)
+            harmonicPowers [order - 1] += powers [i];
+    }
+}
+
+int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
+                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, int *harmonicOrders,
+                          int size, af_value f0, af_value threshold)
+{
+    int nHarmonics = 0;
+    int i = 0;
+
+    for (i = 0; i < size; ++i)
+    {
+        int order = 0;
+
+        if (af_is_harmonic (partialFrequencies [i], f0, threshold, &order))
+        {
+            harmonicAmplitudes [nHarmonics] = partialAmplitudes [i];
+            harmonicFrequencies [nHarmonics] = partialFrequencies [i];
+            harmonicOrders [nHarmonics] = order;
+            ++nHarmonics;
+        }
+    }
+
+    return nHarmonics;
+}
+

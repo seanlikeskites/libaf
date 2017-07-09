@@ -74,6 +74,8 @@ void af_amplitude_to_db_array (const af_value *in, af_value *out, int size);
 af_value af_db_to_amplitude (af_value in);
 void af_db_to_amplitude_array (const af_value *in, af_value *out, int size);
 
+void af_zero_array (af_value *in, int size);
+
 /* spectra */
 void af_spectrum_frequencies (af_value *frequencies, af_value fs, int size);
 void af_magnitude_spectrum (atfft_complex *spectrum, af_value *magnitudeSpectrum, int size);
@@ -123,12 +125,15 @@ af_value af_spectral_roll_off (const af_value *powers, const af_value *frequenci
 int af_spectral_partials (const af_value *ampltiudes, const af_value *frequencies,
                           af_value *partialAmplitudes, af_value *partialFrequencies,
                           int size, int separation, af_value prominence);
-int af_is_harmonic (af_value frequency, af_value f0, af_value threshold);
-int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
-                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, 
-                          int size, af_value f0, af_value threshold);
 af_value af_inharmonicity (const af_value *amplitudes, const af_value *frequencies,
                            int size, af_value f0);
+int af_is_harmonic (af_value frequency, af_value f0, af_value threshold, int *order);
+void af_harmonic_powers (const af_value *powers, const af_value *frequencies, int size,
+                         af_value *harmonicPowers, int maxOrder,
+                         af_value f0, af_value threshold);
+int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
+                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, int *harmonicOrders,
+                          int size, af_value f0, af_value threshold);
 
 /* tristimulus */
 af_value af_band_proportion_of_energy (const af_value *amplitudes, const af_value *frequencies,
