@@ -129,11 +129,11 @@ af_value af_inharmonicity (const af_value *amplitudes, const af_value *frequenci
                            int size, af_value f0);
 int af_is_harmonic (af_value frequency, af_value f0, af_value threshold, int *order);
 void af_harmonic_powers (const af_value *powers, const af_value *frequencies, int size,
-                         af_value *harmonicPowers, int maxOrder,
+                         af_value *harmonicPowers, af_value *harmonicFrequencies, int maxOrder,
                          af_value f0, af_value threshold);
-int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
-                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, int *harmonicOrders,
-                          int size, af_value f0, af_value threshold);
+af_value af_oddness (const af_value *harmonicPowers, int size);
+af_value af_evenness (const af_value *harmonicPowers, int size);
+af_value af_odd_even_ratio (const af_value *harmonicPowers, int size);
 
 /* tristimulus */
 af_value af_band_proportion_of_energy (const af_value *amplitudes, const af_value *frequencies,

@@ -92,12 +92,16 @@ int af_is_harmonic (af_value frequency, af_value f0, af_value threshold, int *or
 }
 
 void af_harmonic_powers (const af_value *powers, const af_value *frequencies, int size,
-                         af_value *harmonicPowers, int maxOrder,
+                         af_value *harmonicPowers, af_value *harmonicFrequencies, int maxOrder,
                          af_value f0, af_value threshold)
 {
     int i = 0;
 
-    af_zero_array (harmonicPowers, maxOrder);
+    for (i = 0; i < maxOrder; ++i)
+    {
+        harmonicPowers [i] = 0.0;
+        harmonicFrequencies [i] = f0 * (i + 1);
+    }
 
     for (i = 0; i < size; ++i)
     {
@@ -105,7 +109,7 @@ void af_harmonic_powers (const af_value *powers, const af_value *frequencies, in
         int harmonic = 0;
         int order = 0;
 
-        af_is_harmonic (freq, f0, threshold, &order);
+        harmonic = af_is_harmonic (freq, f0, threshold, &order);
 
         if (order > maxOrder)
             break;
@@ -114,26 +118,41 @@ void af_harmonic_powers (const af_value *powers, const af_value *frequencies, in
     }
 }
 
-int af_harmonic_partials (const af_value *partialAmplitudes, const af_value *partialFrequencies,
-                          af_value *harmonicAmplitudes, af_value *harmonicFrequencies, int *harmonicOrders,
-                          int size, af_value f0, af_value threshold)
+af_value af_parity_sum (const af_value *harmonicPowers, int size, int parity)
 {
-    int nHarmonics = 0;
+    int sum = 0.0;
     int i = 0;
 
-    for (i = 0; i < size; ++i)
+    for (i = parity; i < size; i += 2)
     {
-        int order = 0;
-
-        if (af_is_harmonic (partialFrequencies [i], f0, threshold, &order))
-        {
-            harmonicAmplitudes [nHarmonics] = partialAmplitudes [i];
-            harmonicFrequencies [nHarmonics] = partialFrequencies [i];
-            harmonicOrders [nHarmonics] = order;
-            ++nHarmonics;
-        }
+        sum += harmonicPowers [i];
     }
 
-    return nHarmonics;
+    return sum;
 }
 
+af_value af_parityness (const af_value *harmonicPowers, int size, int parity)
+{
+    af_value num = af_parity_sum (harmonicPowers, size, parity);
+    af_value den = num + af_parity_sum (harmonicPowers, size, 1 - parity);
+
+    return sqrt (num / den);
+}
+
+af_value af_oddness (const af_value *harmonicPowers, int size)
+{
+    return (af_parityness (harmonicPowers, size, 0));
+}
+
+af_value af_evenness (const af_value *harmonicPowers, int size)
+{
+    return (af_parityness (harmonicPowers, size, 1));
+}
+
+af_value af_odd_even_ratio (const af_value *harmonicPowers, int size)
+{
+    af_value num = af_parity_sum (harmonicPowers, size, 0);
+    af_value den = af_parity_sum (harmonicPowers, size, 1);
+
+    return sqrt (num / den);
+}
