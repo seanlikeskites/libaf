@@ -11,7 +11,7 @@ extern "C"
 /** Some typdefs for changing the type libaf works with. \cond */
 #if defined(LIBAF_TYPE_FLOAT)
 #   if !defined(ATFFT_TYPE_FLOAT)
-#       define ATFFT_TYPE__FLOAT
+#       define ATFFT_TYPE_FLOAT
 #   endif
     typedef float af_value;
 #   define AF_VALUE_MIN FLT_MIN
@@ -19,7 +19,7 @@ extern "C"
 
 #elif defined(LIBAF_TYPE_LONG_DOUBLE)
 #   if !defined(ATFFT_TYPE_LONG_DOUBLE)
-#       define ATFFT_TYPE__LONG_DOUBLE
+#       define ATFFT_TYPE_LONG_DOUBLE
 #   endif
     typedef long double af_value;
 #   define AF_VALUE_MIN LDBL_MIN
