@@ -120,7 +120,7 @@ void af_harmonic_powers (const af_value *powers, const af_value *frequencies, in
 
 af_value af_parity_sum (const af_value *harmonicPowers, int size, int parity)
 {
-    int sum = 0.0;
+    af_value sum = 0.0;
     int i = 0;
 
     for (i = parity; i < size; i += 2)

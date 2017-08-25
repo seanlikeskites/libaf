@@ -34,7 +34,7 @@ struct af_bands* af_init_mfcc_bands (af_value fs, int size, af_value minFreq, af
     af_value m = melRange / (nBounds - 1);
 
     int lastBin = 0;
-    af_value *bounds = malloc (nBounds * sizeof (*bounds));
+    int *bounds = malloc (nBounds * sizeof (*bounds));
     int *widths = malloc (nBands * sizeof (*widths));
 
     if (!(bounds && widths))
